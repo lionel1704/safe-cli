@@ -46,17 +46,17 @@ pub fn auth_commander(
             Ok(())
         }
         None => {
-            println!("Authorising CLI application...");
+            // println!("Authorising CLI application...");
 
-            let auth_credentials = safe
-                .auth_app(APP_ID, APP_NAME, APP_VENDOR, port)
-                .map_err(|err| format!("Application authorisation failed: {}", err))?;
+            // let auth_credentials = safe
+            //     .auth_app(APP_ID, APP_NAME, APP_VENDOR, port)
+            //     .map_err(|err| format!("Application authorisation failed: {}", err))?;
 
-            file.write_all(auth_credentials.as_bytes())
-                .map_err(|err| format!("Unable to write credentials in {}: {}", file_path, err))?;
+            // file.write_all(auth_credentials.as_bytes())
+            //     .map_err(|err| format!("Unable to write credentials in {}: {}", file_path, err))?;
 
-            println!("SAFE CLI app was successfully authorised");
-            println!("Credentials were stored in {}", file_path);
+            // println!("SAFE CLI app was successfully authorised");
+            // println!("Credentials were stored in {}", file_path);
             Ok(())
         }
     }
