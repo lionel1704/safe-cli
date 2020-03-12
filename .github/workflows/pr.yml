@@ -1,6 +1,6 @@
 name: PR
 
-on: [pull_request]
+on: [pull_request, push]
 
 env:
   # Run all cargo commands with --verbose.
@@ -10,6 +10,31 @@ env:
   RUSTFLAGS: "-D warnings"
 
 jobs:
+  e2e:
+    name: E2E against real baby
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - name: dl vault
+        run: git clone https://github.com/lionel1704/safe_vault.git ../safe_vault && cd ../safe_vault && git checkout bypass-client-reqs && cargo build --release && cd -
+      - run: mkdir -p ~/.safe/vault
+      - run: cp ../safe_vault/target/release/safe_vault ~/.safe/vault/
+      - run: cargo build --release
+      - run: mkdir -p ~/.safe/safe-cli
+      - run: mkdir -p ~/.safe/authd
+      - run: cp ./target/release/safe ~/.safe/safe-cli/
+      - run: cp ./target/release/safe-authd ~/.safe/authd/
+      - run: echo "::add-path::~/.safe/safe-cli/safe"
+      - run: echo "::add-path::~/.safe/authd/safe-authd"
+      - name: Benchmark 
+        run: cargo bench
+        shell: bash
+
   clippy:
     name: Rustfmt-Clippy
     runs-on: ubuntu-latest

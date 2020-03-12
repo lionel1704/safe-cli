@@ -35,6 +35,9 @@ pub enum VaultSubCommands {
         /// Interval in seconds between launching each of the vaults
         #[structopt(short = "i", long, default_value = "1")]
         interval: u64,
+        /// Start authd and login with
+        #[structopt(short = "t", long = "testing")]
+        test: bool,
     },
     /// Shutdown all running vaults processes
     #[structopt(name = "killall")]
@@ -52,11 +55,13 @@ pub fn vault_commander(cmd: Option<VaultSubCommands>) -> Result<(), String> {
             vault_path,
             verbosity,
             interval,
+            test,
         }) => vault_run(
             vault_path,
             VAULTS_DATA_FOLDER,
             verbosity,
             &interval.to_string(),
+            test,
         ),
         Some(VaultSubCommands::Killall { vault_path }) => vault_shutdown(vault_path),
         None => Err("Missing vault subcommand".to_string()),

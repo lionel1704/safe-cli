@@ -1,2 +1,5 @@
 [workspace]
 members = ["safe-cli", "safe-api", "safe-ffi", "safe-authd", "jsonrpc-quic"]
+
+[patch.crates-io]
+ffi_utils = { git = "https://github.com/joshuef/ffi_utils.git", rev = "22677685eced2ff9692f9f3d91c68506580881e0" }
