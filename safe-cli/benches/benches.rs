@@ -7,7 +7,7 @@ use criterion::{BatchSize, Criterion};
 
 const TEST_FILE_RANDOM_CONTENT: &str = "test_file_random_content.txt";
 
-const SAMPLE_SIZE: usize = 20;
+const SAMPLE_SIZE: usize = 50;
 
 fn custom_criterion() -> Criterion {
     Criterion::default().sample_size(SAMPLE_SIZE)
