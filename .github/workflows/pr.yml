@@ -20,10 +20,10 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - name: dl vault
-        run: git clone https://github.com/lionel1704/safe_vault.git ../safe_vault && cd ../safe_vault && git checkout bypass-client-reqs && cargo build --release && cd -
       - run: mkdir -p ~/.safe/vault
-      - run: cp ../safe_vault/target/release/safe_vault ~/.safe/vault/
+      - name: dl vault
+        run: wget https://safe-vault.s3.eu-west-2.amazonaws.com/safe_vault_lionel_pr_no_parsec.zip
+      - run: unzip safe_vault_lionel_pr_no_parsec.zip -d "~/.safe/vault"
       - run: cargo build --release
       - run: mkdir -p ~/.safe/safe-cli
       - run: mkdir -p ~/.safe/authd
